@@ -5,7 +5,7 @@ import cloudinaryInstance from "../config/cloudinary.js";
 //create items
 export const createItem = async (req, res) => {
   try {
-    const { name, price, isAvailable, description, image, quantity } = req.body;
+    const { name, price, isAvailable, description, image, quantity,category,brand } = req.body;
     
     let imageUrl = "https://example.com/default-image.jpg"; 
 
@@ -29,6 +29,8 @@ export const createItem = async (req, res) => {
       description,
       image: imageUrl,
       quantity,
+      category,
+      brand
     });
 
 

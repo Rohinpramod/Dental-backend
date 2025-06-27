@@ -12,6 +12,8 @@ import addressRoutes from "./routes/addressRoutes.js";
 import couponRoutes from "./routes/couponRoutes.js";
 import orderRoutes from "./routes/orderRouter.js";
 
+import CategoryRoutes from './routes/categoryRoutes.js'
+
 import authMiddleware from "./middlewares/authMiddleware.js";
 import roleMiddleware from "./middlewares/roleMiddleware.js";
 
@@ -24,7 +26,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "https://picklewalah.com",
+      "http://localhost:5173",
       "https://pickle-walah-dashboard.vercel.app",
     ],
     credentials: true,
@@ -48,6 +50,8 @@ app.use("/api/cart", authMiddleware, cartRoutes);
 app.use("/api/address", authMiddleware, addressRoutes);
 app.use("/api/coupon", authMiddleware, couponRoutes);
 app.use("/api/order", authMiddleware, orderRoutes);
+
+app.use("/api/category",CategoryRoutes)
 
 // Default route
 app.get("/", (req, res) => {
