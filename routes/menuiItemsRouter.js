@@ -11,7 +11,8 @@ import {
   deleteItem,
   getProductItemByBrand,
   getItemsByCategory,
-  getItemsBySection
+  getItemsBySection,
+  
 } from '../controllers/productController.js';
 import  upload  from '../middlewares/multer.js';
 
@@ -27,6 +28,7 @@ router.delete('/deleteMenu/:ItemId', authMiddleware, deleteItem);
 router.get("/brand/:brand", getProductItemByBrand);
 router.get("/category/:category", getItemsByCategory);
 router.get("/students-section/:section", getItemsBySection);
+
 
 
 

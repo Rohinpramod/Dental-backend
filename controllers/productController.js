@@ -5,7 +5,7 @@ import cloudinaryInstance from "../config/cloudinary.js";
 //create items
 export const createItem = async (req, res) => {
   try {
-    const { name, price, isAvailable, description, image, quantity,category,brand,section } = req.body;
+    const { name, price, isAvailable, description, image, quantity,category,brand,section ,department } = req.body;
     
     let imageUrl = "https://example.com/default-image.jpg"; 
 
@@ -31,7 +31,8 @@ export const createItem = async (req, res) => {
       quantity,
       category,
       brand,
-      section
+      section,
+      department
     });
 
 
@@ -146,9 +147,9 @@ export const getItemsBySection = async (req, res) => {
 export const updateItem = async (req, res) => {
   try {
     const { ItemId} = req.params;
-    const { name, price, category,quantity, isAvailable ,description } = req.body;
+    const { name, price, category,quantity, isAvailable ,description , brand,department , section } = req.body;
 
-    let updateFields = { name, price,quantity, category, isAvailable, description};
+    let updateFields = { name, price,quantity, category, isAvailable, description, brand, department, section};
 
     if (req.file) {
       const uploadResponse = await cloudinaryInstance.uploader.upload(
@@ -167,7 +168,7 @@ export const updateItem = async (req, res) => {
     if (!Item) {
       return res
         .status(404)
-        .json({ message: "Menu item not found ." });
+        .json({ message: "product item not found ." });
     }
 
     res.json(Item);
@@ -183,15 +184,15 @@ export const deleteItem = async (req, res) => {
     const { ItemId } = req.params;
 
     if (!ItemId) {
-      return res.status(400).json({ message: "Item item ID is required" });
+      return res.status(400).json({ message: "Product ID is required" });
     }
     
     const deletedItem = await ProductItem.findByIdAndDelete(ItemId);
     if (!deletedItem) {
-      return res.status(404).json({ message: "Item item not found" });
+      return res.status(404).json({ message: "product not found" });
     }
 
-    res.status(200).json({ message: " Item deleted Successfully" });
+    res.status(200).json({ message: " product deleted Successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
