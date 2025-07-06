@@ -13,6 +13,7 @@ import couponRoutes from "./routes/couponRoutes.js";
 import orderRoutes from "./routes/orderRouter.js";
 
 import CategoryRoutes from './routes/categoryRoutes.js'
+import StudentsSection from './routes/StudentsSectionCardRoutes.js'
 
 import authMiddleware from "./middlewares/authMiddleware.js";
 import roleMiddleware from "./middlewares/roleMiddleware.js";
@@ -50,6 +51,7 @@ app.use("/api/cart", authMiddleware, cartRoutes);
 app.use("/api/address", authMiddleware, addressRoutes);
 app.use("/api/coupon", authMiddleware, couponRoutes);
 app.use("/api/order", authMiddleware, orderRoutes);
+app.use('/api/students-section',StudentsSection)
 
 app.use("/api/category",CategoryRoutes)
 

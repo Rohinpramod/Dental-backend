@@ -8,7 +8,10 @@ import {
   getItemById,
   getAllItems,
   updateItem,
-  deleteItem
+  deleteItem,
+  getProductsByBrand,
+  getProductsByCategory,
+  getProductsByStudentsSection
 } from '../controllers/productController.js';
 import  upload  from '../middlewares/multer.js';
 
@@ -20,5 +23,13 @@ router.get('/menu-item/:id', getItemById);
 router.get('/get-all-menu', getAllItems);
 router.put('/updateMenu/:ItemId', authMiddleware, upload.single('image'), updateItem);
 router.delete('/deleteMenu/:ItemId', authMiddleware, deleteItem);
+
+router.get("/brand/:brand", getProductsByBrand);
+router.get("/category/:category", getProductsByCategory);
+router.get("/students-section/:section", getProductsByStudentsSection);
+
+
+
+
 
 export default router;
