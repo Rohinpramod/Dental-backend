@@ -9,9 +9,9 @@ import {
   getAllItems,
   updateItem,
   deleteItem,
-  getProductsByBrand,
-  getProductsByCategory,
-  getProductsByStudentsSection
+  getProductItemByBrand,
+  getItemsByCategory,
+  getItemsBySection
 } from '../controllers/productController.js';
 import  upload  from '../middlewares/multer.js';
 
@@ -24,9 +24,9 @@ router.get('/get-all-menu', getAllItems);
 router.put('/updateMenu/:ItemId', authMiddleware, upload.single('image'), updateItem);
 router.delete('/deleteMenu/:ItemId', authMiddleware, deleteItem);
 
-router.get("/brand/:brand", getProductsByBrand);
-router.get("/category/:category", getProductsByCategory);
-router.get("/students-section/:section", getProductsByStudentsSection);
+router.get("/brand/:brand", getProductItemByBrand);
+router.get("/category/:category", getItemsByCategory);
+router.get("/students-section/:section", getItemsBySection);
 
 
 

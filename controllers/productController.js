@@ -5,7 +5,7 @@ import cloudinaryInstance from "../config/cloudinary.js";
 //create items
 export const createItem = async (req, res) => {
   try {
-    const { name, price, isAvailable, description, image, quantity,category,brand } = req.body;
+    const { name, price, isAvailable, description, image, quantity,category,brand,section } = req.body;
     
     let imageUrl = "https://example.com/default-image.jpg"; 
 
@@ -30,7 +30,8 @@ export const createItem = async (req, res) => {
       image: imageUrl,
       quantity,
       category,
-      brand
+      brand,
+      section
     });
 
 
@@ -52,7 +53,7 @@ export const getAllItems = async (req, res)=>{
   }
 };
 
-//byName-all hotel items
+//byName-items
 export const getItemsByName = async (req, res) => {
   try {
     const name = req.params.name;
@@ -85,13 +86,55 @@ export const getItemById = async (req, res) => {
 };
 
 
-//get-Resturant-all-menu
+//get-all-menu-by-brand
 export const getProductItemByBrand = async (req, res) => {
   try {
     const ProductItem = await ProductItem.find({
       Brand: req.params.BrandId,
     }).populate("Item");
     res.json(ProductItem);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//by-category
+export const getItemsByCategory = async (req, res) => {
+  try {
+    const { category } = req.params;
+
+    if (!category) {
+      return res.status(400).json({ message: "Category parameter is required" });
+    }
+
+    const items = await ProductItem.find({ category });
+
+    if (items.length === 0) {
+      return res.status(404).json({ message: "No items found for this category" });
+    }
+
+    res.status(200).json(items);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//by-section
+export const getItemsBySection = async (req, res) => {
+  try {
+    const { section } = req.params;
+
+    if (!section) {
+      return res.status(400).json({ message: "Section parameter is required" });
+    }
+
+    const items = await ProductItem.find({ section });
+
+    if (items.length === 0) {
+      return res.status(404).json({ message: "No items found for this section" });
+    }
+
+    res.status(200).json(items);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
