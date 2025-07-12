@@ -89,11 +89,22 @@ export const getItemById = async (req, res) => {
 
 //get-all-menu-by-brand
 export const getProductItemByBrand = async (req, res) => {
-  try {
-    const ProductItem = await ProductItem.find({
-      Brand: req.params.BrandId,
-    }).populate("Item");
-    res.json(ProductItem);
+   try {
+    const { brand } = req.params;
+
+    if (!brand) {
+      return res.status(400).json({ message: "Brand name is required" });
+    }
+
+    const items = await ProductItem.find({
+      brand: { $regex: `^${brand}$`, $options: 'i' } // Case-insensitive exact match
+    });
+
+    if (!items || items.length === 0) {
+      return res.status(404).json({ message: "No items found for this brand" });
+    }
+
+    res.status(200).json(items);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -121,18 +132,18 @@ export const getItemsByCategory = async (req, res) => {
 };
 
 //by-section
-export const getItemsBySection = async (req, res) => {
+export const getItemsByDepartment = async (req, res) => {
   try {
-    const { section } = req.params;
+    const { department } = req.params;
 
-    if (!section) {
-      return res.status(400).json({ message: "Section parameter is required" });
+    if (!department) {
+      return res.status(400).json({ message: "Department parameter is required" });
     }
-
-    const items = await ProductItem.find({ section });
+  
+    const items = await ProductItem.find({ department: { $regex: new RegExp(`^${department}$`, 'i') } });
 
     if (items.length === 0) {
-      return res.status(404).json({ message: "No items found for this section" });
+      return res.status(404).json({ message: "No items found for this Department" });
     }
 
     res.status(200).json(items);
