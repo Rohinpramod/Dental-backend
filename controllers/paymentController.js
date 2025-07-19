@@ -132,7 +132,7 @@ const razorpay = new RazorPay({
     console.error("Error during payment verification:", error);
     return res
       .status(500)
-      .json({ message: "Internal Server Error", error: error.message });
+      .json({ message:error.message });
   }
 };
 

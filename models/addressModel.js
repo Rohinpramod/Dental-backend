@@ -23,7 +23,7 @@ const addressSchema = new mongoose.Schema({
     trim: true,
   },
   postalCode: {
-    type: String,
+    type: Number,
     required: true,
     trim: true,
     match: /^[1-9][0-9]{5}$/,
